@@ -31,7 +31,7 @@ public class Balancerecord {
     private Integer customerid;
 
     /**
-     * 0充值 1佣金提现 2下单消费 升级冻结3 冻结解除4  5 提现申请   6退单返回   7管理员操作
+     * 0充值 1佣金提现 2下单消费 升级冻结3 冻结解除4  5 提现申请   6退单返回   7管理员操作 11
      */
     private Integer type;
 
