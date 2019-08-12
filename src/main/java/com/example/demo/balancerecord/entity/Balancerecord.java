@@ -33,8 +33,8 @@ public class Balancerecord {
     /**  
      * 0充值 1佣金提现 2下单消费 升级冻结3 冻结解除4  5 提现申请   6退单返回   7管理员操作2323 1212  w2w  121 delevopment 12 aa
      * 
-     * 这里是更新的内容
-     */
+     * 这里是更新的内容  更改
+     */ 
     private Integer type;
 
     /**
