@@ -5,11 +5,20 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.SimpleFormatter;
 
+import javax.security.auth.x500.X500Principal;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +26,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -33,6 +44,7 @@ import com.example.demo.common.PagePara;
 import com.example.demo.common.PageVo;
 import com.example.demo.common.Result;
 import com.example.demo.good.entity.Good;
+import com.example.demo.good.entity.GoodExcel;
 import com.example.demo.good.service.IGoodService;
 import com.example.demo.goodclass.entity.Goodclass;
 import com.example.demo.goodclass.service.IGoodclassService;
@@ -40,6 +52,8 @@ import com.example.demo.hopeorder.entity.Hopeorder;
 import com.example.demo.hopeorder.service.IOrderService;
 import com.example.demo.orderimplrecord.entity.Orderimplrecord;
 import com.example.demo.orderimplrecord.service.IOrderimplrecordService;
+import com.example.demo.utils.excel.ExcelUtils;
+import com.example.demo.web.annotation.RequestParamsNotEmpty;
 
 import lombok.Value;
 import lombok.experimental.var;
@@ -66,8 +80,10 @@ public class GoodController {
 	public ModelAndView list() {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("webui/good/list");
+		System.out.println("12123213");
 		return mav;
 	}
+	@RequestParamsNotEmpty(names = { "test","id" })
 	@RequestMapping("/good/listform")
 	public ModelAndView listform(String id) {
 		ModelAndView mav = new ModelAndView();
@@ -164,6 +180,51 @@ public class GoodController {
 			result.setMsg(e.getMessage());
 		}
 		return result; 
+	}
+	
+	
+	@RequestMapping("/good/importexcel")
+	@ResponseBody
+	 public Result importexcel(HttpServletRequest req, @RequestParam("file") MultipartFile file) {
+		Result result = new Result();
+		try {	
+			long start = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
+			long start1 = LocalDateTime.now().toEpochSecond(ZoneOffset.of("+8"));
+			List<GoodExcel> list = ExcelUtils.readExcel("", GoodExcel.class, file);
+			list.stream().forEach(x -> System.out.println(x.getGoodtypename()));
+			long end = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
+			long end1 = LocalDateTime.now().toEpochSecond(ZoneOffset.of("+8"));
+			System.out.println("导入时间毫秒差：" + (end - start) );
+			System.out.println("导入时间分差：" + (end1 - start1) );
+        	result.setMsg("提交成功");
+        	result.setData("");
+        } catch (IllegalStateException e) {
+			e.printStackTrace();
+        	result.setSucess(false);
+			result.setMsg(e.getMessage());
+		}
+		return result; 
+	}
+	
+	@RequestMapping(value = "/good/exportexcel",method = RequestMethod.GET)
+	@ResponseBody
+	 public void exportexcel(HttpServletResponse response) {
+	    EntityWrapper<Good> ew=new EntityWrapper<Good>();
+		List<Good> goods = goodService.selectList(ew);
+		List<GoodExcel> goodexcels = new LinkedList<GoodExcel>();
+	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		goods.forEach(x -> {
+			GoodExcel model = new GoodExcel();
+			model.setId(x.getId());
+			model.setCreatetime(x.getCreatetime());
+			model.setGoodtypename(x.getGoodtypename());
+			model.setRank(x.getRank());
+			goodexcels.add(model);
+		});
+		long t1 = System.currentTimeMillis();
+		ExcelUtils.writeExcel(response, goodexcels, GoodExcel.class);
+        long t2 = System.currentTimeMillis();
+        System.out.println(String.format("write over! cost:%sms", (t2 - t1)));
 	}
 	
 	public void testjson() {

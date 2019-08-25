@@ -14,6 +14,8 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +33,8 @@ import org.springframework.util.StringUtils;
 public class BalancerecordServiceImpl extends ServiceImpl<BalancerecordMapper, Balancerecord> implements IBalancerecordService {
 	@Autowired
 	private IAddbalanceService addbalanceService;
-	
+	@Autowired
+	private BalancerecordMapper balancerecordMapper;
 	@Autowired
 	private ICustomerService customerService;
 	@Transactional
@@ -79,6 +82,16 @@ public class BalancerecordServiceImpl extends ServiceImpl<BalancerecordMapper, B
 	    Page<Balancerecord> hopeorderPage= this.selectPage(pageEw,ew);
 	    pageVo.changeToPageVo(hopeorderPage);
 		return pageVo;	
+	}
+
+	@Override
+	public List<Balancerecord> getTestList() {
+		return balancerecordMapper.getTestList();
+	}
+
+	@Override
+	public Integer getCount() {
+		return balancerecordMapper.getCount();
 	}
 
 }

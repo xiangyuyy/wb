@@ -6,6 +6,9 @@ import com.example.demo.common.PagePara;
 import com.example.demo.common.PageVo;
 import com.example.demo.customer.entity.Customer;
 import com.example.demo.hopeorder.entity.Hopeorder;
+
+import java.util.List;
+
 import com.baomidou.mybatisplus.service.IService;
 
 /**
@@ -19,5 +22,9 @@ import com.baomidou.mybatisplus.service.IService;
 public interface IBalancerecordService extends IService<Balancerecord> {
 	boolean insertOrder(Balancerecord balancerecord,Addbalance addbalance,Customer customer);
 	boolean insertCommCashOrder(Balancerecord balancerecord,Customer customer);
+	
+	List<Balancerecord> getTestList();
+	Integer getCount();
+	
 	public PageVo<Balancerecord> GetPageList(Balancerecord balancerecord,PagePara pagePara);
 }

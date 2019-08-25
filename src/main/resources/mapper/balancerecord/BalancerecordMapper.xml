@@ -4,5 +4,10 @@
 
     <!-- 开启二级缓存 -->
     <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
-
+    
+	<select id="getTestList"
+		resultType="com.example.demo.balancerecord.entity.Balancerecord">
+		SELECT *
+		where status=1
+	</select>
 </mapper>

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.example.demo.customer.entity.Customer;
 import com.example.demo.customer.service.ICustomerService;
+import com.example.demo.web.provide.RequestParamsNotEmptyMethodArgumentResolver;
 
 /**
  * 登录配置
@@ -29,12 +31,17 @@ public class WebAdminSecurityConfig extends WebMvcConfigurerAdapter {
 	public final static String SESSION_KEY = "account";
 
 	@Bean
+	public HandlerInterceptor getRequestParamsNotEmptyInterceptor() {
+		return new RequestParamsNotEmptyMethodArgumentResolver();
+	}
+	@Bean
 	public SecurityInterceptor getSecurityInterceptor() {
 		return new SecurityInterceptor();
 	}
-
+	
 	public void addInterceptors(InterceptorRegistry registry) {
 		InterceptorRegistration addInterceptor = registry.addInterceptor(getSecurityInterceptor());
+		registry.addInterceptor(getRequestParamsNotEmptyInterceptor()).addPathPatterns("/**");;
 //	    addInterceptor.excludePathPatterns("/error");
 		addInterceptor.addPathPatterns("/**");
 		addInterceptor.excludePathPatterns("/login");

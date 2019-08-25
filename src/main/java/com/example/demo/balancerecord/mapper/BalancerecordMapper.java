@@ -1,6 +1,11 @@
 package com.example.demo.balancerecord.mapper;
 
 import com.example.demo.balancerecord.entity.Balancerecord;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Select;
+
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 
 /**
@@ -12,5 +17,10 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * @since 2019-02-23
  */
 public interface BalancerecordMapper extends BaseMapper<Balancerecord> {
-
+	
+	@Select("Select * from balancerecord where status=1")
+	
+	List<Balancerecord> getTestList();
+	@Select("Select count(*) from balancerecord where status=1")
+	Integer getCount();
 }
