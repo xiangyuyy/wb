@@ -41,7 +41,8 @@ public class WebAdminSecurityConfig extends WebMvcConfigurerAdapter {
 	
 	public void addInterceptors(InterceptorRegistry registry) {
 		InterceptorRegistration addInterceptor = registry.addInterceptor(getSecurityInterceptor());
-		registry.addInterceptor(getRequestParamsNotEmptyInterceptor()).addPathPatterns("/**");;
+		//注意拦截器必须配置
+		registry.addInterceptor(getRequestParamsNotEmptyInterceptor()).addPathPatterns("/**");
 //	    addInterceptor.excludePathPatterns("/error");
 		addInterceptor.addPathPatterns("/**");
 		addInterceptor.excludePathPatterns("/login");
