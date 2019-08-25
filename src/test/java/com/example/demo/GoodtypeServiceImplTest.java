@@ -36,15 +36,15 @@ public class GoodtypeServiceImplTest {
 	@Autowired
 	private IBalancerecordService balancerecordService;
 	@Test
-	public void testGetPageList() throws ParseException {
+	public void testGetPageList() {
 		
 		SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		
+
 		Date date = new Date();
 		String s = isoFormat.format(date);
 		System.out.println(s);
-		
-/*		isoFormat.setTimeZone(TimeZone.getTimeZone("utc+8"));*/
+
+		/*		isoFormat.setTimeZone(TimeZone.getTimeZone("utc+8"));*/
 		//Date d = isoFormat.parse("1566461285000");
 		
 /*        String str = "2013-01-21 15:10:20";  
