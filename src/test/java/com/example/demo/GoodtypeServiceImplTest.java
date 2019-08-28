@@ -10,6 +10,12 @@ import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.dingtalk.api.DefaultDingTalkClient;
+import com.dingtalk.api.DingTalkClient;
+import com.dingtalk.api.request.OapiUserGetRequest;
+import com.dingtalk.api.response.OapiUserGetResponse;
+import com.example.demo.utils.RobotHelperUtil;
+import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +41,12 @@ public class GoodtypeServiceImplTest {
 	private IStudentService studentService;
 	@Autowired
 	private IBalancerecordService balancerecordService;
+
+	@Test
+	public void testDingdSendInfor(){
+		new RobotHelperUtil().sdkDemoJava();
+		System.out.println("21123123");
+	}
 	@Test
 	public void testGetPageList() {
 		
