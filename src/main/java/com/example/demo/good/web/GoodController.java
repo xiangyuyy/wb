@@ -118,7 +118,7 @@ public class GoodController {
 	public PageVo<Good> getlist(Good good,PagePara pagePara) {
 		return goodService.GetPageList(good, pagePara);
 	}
-	
+
 	@RequestMapping("/good/update")
 	@ResponseBody
 	public Result update(Good good) {

@@ -2,7 +2,7 @@ package com.example.demo.utils;
 
 import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.DingTalkClient;
-import com.dingtalk.api.request.OapiRobotSendRequest ;
+import com.dingtalk.api.request.OapiRobotSendRequest;
 import com.dingtalk.api.response.OapiRobotSendResponse;
 import com.taobao.api.ApiException;
 import lombok.extern.slf4j.Slf4j;
@@ -17,8 +17,6 @@ import java.util.List;
  * @description: 机器人工具类
  *      每个机器人每分钟最多发送20条
  *      限制6 个机器人/群
- * @author: niaonao
- * @date: 2019/7/6
  **/
 @Slf4j
 public class RobotHelperUtil {
@@ -42,12 +40,9 @@ public class RobotHelperUtil {
     public static DingTalkClient client = new DefaultDingTalkClient(ACCESS_TOKEN);
 
     /**
-     * @description: 官方演示示例
      *      title 是消息列表下透出的标题
      *      text 是进入群后看到的消息内容
      *
-     * @author: niaonao
-     * @date: 2019/7/6
      */
     public static void sdkDemoJava() {
         DingTalkClient client = RobotHelperUtil.client;
@@ -60,23 +55,23 @@ public class RobotHelperUtil {
         at.setAtMobiles(Arrays.asList("18267913012"));
         request.setAt(at);
 
-     /*   request.setMsgtype("link");
+        request.setMsgtype("link");
         OapiRobotSendRequest.Link link = new OapiRobotSendRequest.Link();
         link.setMessageUrl("https://www.dingtalk.com/");
         link.setPicUrl("");
         link.setTitle("123123");
         link.setText("这个即将发布的新版本，创始人陈航（花名“无招”）称它为“红树林”。\n" +
                 "而在此之前，每当面临重大升级，产品经理们都会取一个应景的代号，这一次，为什么是“红树林");
-        request.setLink(link);*/
+        request.setLink(link);
 
-/*        request.setMsgtype("markdown");
+        request.setMsgtype("markdown");
         OapiRobotSendRequest.Markdown markdown = new OapiRobotSendRequest.Markdown();
         markdown.setTitle("杭州天气");
         markdown.setText("#### 杭州天气 @156xxxx8827\n" +
                 "> 9度，西北风1级，空气良89，相对温度73%\n\n" +
                 "> ![screenshot](https://gw.alipayobjects.com/zos/skylark-tools/public/files/84111bbeba74743d2771ed4f062d1f25.png)\n"  +
                 "> ###### 10点20分发布 [天气](http://www.thinkpage.cn/) \n");
-        request.setMarkdown(markdown);*/
+        request.setMarkdown(markdown);
         try {
             client.execute(request);
         } catch (ApiException e) {
@@ -90,14 +85,11 @@ public class RobotHelperUtil {
      * @param mobileList    指定@ 联系人
      * @param isAtAll       是否@ 全部联系人
      * @return: com.dingtalk.api.response.OapiRobotSendResponse
-     * @author: niaonao
-     * @date: 2019/7/6
      */
     public static OapiRobotSendResponse sendMessageByText(String content, List<String> mobileList, boolean isAtAll) {
         if (StringUtils.isEmpty(content)) {
             return null;
         }
-
         //参数	参数类型	必须	说明
         //msgtype	String	是	消息类型，此时固定为：text
         //content	String	是	消息内容
@@ -132,13 +124,11 @@ public class RobotHelperUtil {
      * @param messageUrl     点击消息后跳转的url
      * @param picUrl    插入图片的url
      * @return: com.dingtalk.api.response.OapiRobotSendResponse
-     * @author: niaonao
-     * @date: 2019/7/6
      */
     public static OapiRobotSendResponse sendMessageByLink(String title, String text, String messageUrl, String picUrl) {
-    /*    if (!DataValidUtil.checkNotEmpty(title, text, messageUrl)) {
+        if (StringUtils.isEmpty(text)) {
             return null;
-        }*/
+        }
         //参数	参数类型	必须	说明
         //msgtype	String	是	消息类型，此时固定为：link
         //title	String	是	消息标题
@@ -172,13 +162,11 @@ public class RobotHelperUtil {
      * @param mobileList    消息@ 联系人
      * @param isAtAll   是否@ 全部
      * @return: com.dingtalk.api.response.OapiRobotSendResponse
-     * @author: niaonao
-     * @date: 2019/7/6
      */
     public static OapiRobotSendResponse sendMessageByMarkdown(String title, String markdownText, List<String> mobileList, boolean isAtAll) {
-   /*     if (!DataValidUtil.checkNotEmpty(title, markdownText)) {
+        if (StringUtils.isEmpty(markdownText)) {
             return null;
-        }*/
+        }
         //参数	类型	必选	说明
         //msgtype	String	是	此消息类型为固定markdown
         //title	String	是	首屏会话透出的展示内容
@@ -198,7 +186,6 @@ public class RobotHelperUtil {
             at.setAtMobiles(mobileList);
             request.setAt(at);
         }
-
         OapiRobotSendResponse response = new OapiRobotSendResponse();
         try {
             response = RobotHelperUtil.client.execute(request);
@@ -221,9 +208,9 @@ public class RobotHelperUtil {
      * @date: 2019/7/6
      */
     public static OapiRobotSendResponse sendMessageByActionCardSingle(String title, String markdownText, String singleTitle, String singleURL, boolean btnOrientation, boolean hideAvatar) {
-       /* if (!DataValidUtil.checkNotEmpty(title, markdownText)) {
+        if (StringUtils.isEmpty(markdownText)) {
             return null;
-        }*/
+        }
         //参数	类型	必选	说明
         //    msgtype	string	true	此消息类型为固定actionCard
         //    title	string	true	首屏会话透出的展示内容
@@ -262,13 +249,11 @@ public class RobotHelperUtil {
      * @param btnOrientation    是否横向排列(true 横向排列, false 纵向排列)
      * @param hideAvatar    是否隐藏发消息者头像(true 隐藏头像, false 不隐藏)
      * @return: com.dingtalk.api.response.OapiRobotSendResponse
-     * @author: niaonao
-     * @date: 2019/7/6
      */
     public static OapiRobotSendResponse sendMessageByActionCardMulti(String title, String markdownText, List<OapiRobotSendRequest.Btns> btns, boolean btnOrientation, boolean hideAvatar) {
-/*        if (!DataValidUtil.checkNotEmpty(title, markdownText) || CollectionUtils.isEmpty(btns)) {
+        if (StringUtils.isEmpty(markdownText)) {
             return null;
-        }*/
+        }
         //参数	类型	必选	说明
         //msgtype	string	true	此消息类型为固定actionCard
         //title	string	true	首屏会话透出的展示内容
@@ -302,8 +287,6 @@ public class RobotHelperUtil {
      * @description: 发送FeedCard类型消息
      * @param links
      * @return: com.dingtalk.api.response.OapiRobotSendResponse
-     * @author: niaonao
-     * @date: 2019/7/6
      */
     public static OapiRobotSendResponse sendMessageByFeedCard(List<OapiRobotSendRequest.Links> links) {
         if (CollectionUtils.isEmpty(links)) {

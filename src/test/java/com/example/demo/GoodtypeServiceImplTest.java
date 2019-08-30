@@ -10,10 +10,6 @@ import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.dingtalk.api.DefaultDingTalkClient;
-import com.dingtalk.api.DingTalkClient;
-import com.dingtalk.api.request.OapiUserGetRequest;
-import com.dingtalk.api.response.OapiUserGetResponse;
 import com.example.demo.utils.RobotHelperUtil;
 import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.junit.Test;
