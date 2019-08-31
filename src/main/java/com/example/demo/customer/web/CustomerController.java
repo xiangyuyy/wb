@@ -1,12 +1,14 @@
 package com.example.demo.customer.web;
 
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.example.demo.concurrent.DistributedLock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,14 +43,14 @@ public class CustomerController {
 	private static final Logger logger = LoggerFactory.getLogger(SystemparaController.class);
 	@Autowired
 	private ICustomerService customerService;
-	
+
 	@RequestMapping("/customercenter")
 	public ModelAndView customercenter() {
-		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 		HttpSession session = request.getSession();
 		Customer account = null;
 		if (session.getAttribute("account") != null) {
-			account =(Customer)(session.getAttribute("account"));
+			account = (Customer) (session.getAttribute("account"));
 		}
 		EntityWrapper<Customer> ew = new EntityWrapper<Customer>();
 		ew.where("customerid = {0}", account.getCustomerid());
@@ -58,15 +60,15 @@ public class CustomerController {
 		mav.setViewName("webui/customer/customercenter");
 		return mav;
 	}
-	
+
 	@RequestMapping("/customerinfor")
 	public ModelAndView customerinfor() {
-		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 		HttpSession session = request.getSession();
 		Customer account = null;
 		if (session.getAttribute("account") != null) {
-			account =(Customer)(session.getAttribute("account"));
-		}	
+			account = (Customer) (session.getAttribute("account"));
+		}
 		EntityWrapper<Customer> ew = new EntityWrapper<Customer>();
 		ew.where("customerid = {0}", account.getCustomerid());
 		Customer model = customerService.selectOne(ew);
@@ -75,32 +77,32 @@ public class CustomerController {
 		mav.setViewName("webui/customer/customerinfor");
 		return mav;
 	}
-	
+
 	@RequestMapping("/customer/cpass")
 	public ModelAndView cpass() {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("webui/customer/cpass");
 		return mav;
 	}
-	
+
 	@RequestMapping("/customer/update")
 	@ResponseBody
 	public Result update(Customer customer) {
-		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 		HttpSession session = request.getSession();
 		Customer account = null;
 		if (session.getAttribute("account") != null) {
-			account =(Customer)(session.getAttribute("account"));
+			account = (Customer) (session.getAttribute("account"));
 		}
 		Result result = new Result();
 		String nickname = customer.getNickname();
-		
+
 		if (StringUtils.isEmpty(nickname)) {
 			result.setSucess(false);
 			result.setMsg("昵称不能为空");
 			return result;
-		}	
-		if (!StringUtils.isEmpty(nickname) && !nickname.equals(account.getNickname()) ) {
+		}
+		if (!StringUtils.isEmpty(nickname) && !nickname.equals(account.getNickname())) {
 			EntityWrapper<Customer> ew = new EntityWrapper<Customer>();
 			ew.where("nickname = {0}", nickname);
 			List<Customer> list = customerService.selectList(ew);
@@ -133,19 +135,19 @@ public class CustomerController {
 		}
 		return result;
 	}
-	
+
 	@RequestMapping("/customer/updatepass")
 	@ResponseBody
 	public Result updatepass(Customer customer) {
-		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 		HttpSession session = request.getSession();
 		Customer account = null;
 		if (session.getAttribute("account") != null) {
-			account =(Customer)(session.getAttribute("account"));
+			account = (Customer) (session.getAttribute("account"));
 		}
 		Result result = new Result();
 		String phone = customer.getPhone();
-	
+
 		if (!StringUtils.isEmpty(phone)) {
 			if (!phone.equals(account.getPhone())) {
 				result.setSucess(false);
@@ -174,5 +176,31 @@ public class CustomerController {
 			result.setMsg("操作失败");
 		}
 		return result;
+	}
+
+	@DistributedLock(lockKey = "'testDistributedLock'+#userId")
+	@RequestMapping("/customer/testDistributedLock")
+	@ResponseBody
+	public Result testDistributedLock(String userId) {
+		Result result = new Result();
+		EntityWrapper<Customer> ew = new EntityWrapper<Customer>();
+		ew.where("customerid = {0}", userId);
+		Customer model = customerService.selectOne(ew);
+		if (model.getBalance().compareTo(new BigDecimal(10)) >= 0){
+			model.setBalance(model.getBalance().subtract(new BigDecimal(1)));
+			boolean b;
+			b = customerService.updateById(model);
+			if (b) {
+				result.setMsg("操作成功");
+			} else {
+				result.setSucess(false);
+				result.setMsg("操作失败");
+			}
+		}
+		else{
+			result.setSucess(false);
+			result.setMsg("余额不足");
+		}
+		return  result;
 	}
 }
