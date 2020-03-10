@@ -40,10 +40,4 @@ public class RedisLockProvide {
 		}
 		return obj;
 	}
-	
-	
-	
-	
-	
-
 }

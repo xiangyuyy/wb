@@ -1,3 +1,4 @@
+/*
 package com.example.demo.utils;
 
 import com.dingtalk.api.DefaultDingTalkClient;
@@ -12,38 +13,48 @@ import org.springframework.util.StringUtils;
 import java.util.Arrays;
 import java.util.List;
 
+*/
 /**
  * @className: RobotHelperUtil
  * @description: 机器人工具类
  *      每个机器人每分钟最多发送20条
  *      限制6 个机器人/群
- **/
+ **//*
+
 @Slf4j
 public class RobotHelperUtil {
 
-    /**
+    */
+/**
      * 钉钉群设置 webhook, 支持重置
-     */
+     *//*
+
     private static final String ACCESS_TOKEN = "https://oapi.dingtalk.com/robot/send?access_token=be3963a4285e81bcb915b31e4efb9df6e166a15c7b4c15dff2ccdcf93d09085f";
-    /**
+    */
+/**
      * 消息类型
-     */
+     *//*
+
     private static final String MSG_TYPE_TEXT = "text";
     private static final String MSG_TYPE_LINK = "link";
     private static final String MSG_TYPE_MARKDOWN = "markdown";
     private static final String MSG_TYPE_ACTION_CARD = "actionCard";
     private static final String MSG_TYPE_FEED_CARD = "feedCard";
 
-    /**
+    */
+/**
      * 客户端实例
-     */
+     *//*
+
     public static DingTalkClient client = new DefaultDingTalkClient(ACCESS_TOKEN);
 
-    /**
+    */
+/**
      *      title 是消息列表下透出的标题
      *      text 是进入群后看到的消息内容
      *
-     */
+     *//*
+
     public static void sdkDemoJava() {
         DingTalkClient client = RobotHelperUtil.client;
         OapiRobotSendRequest request = new OapiRobotSendRequest();
@@ -79,13 +90,15 @@ public class RobotHelperUtil {
         }
     }
 
-    /**
+    */
+/**
      * @description: 发送普通文本消息
      * @param content   文本消息
      * @param mobileList    指定@ 联系人
      * @param isAtAll       是否@ 全部联系人
      * @return: com.dingtalk.api.response.OapiRobotSendResponse
-     */
+     *//*
+
     public static OapiRobotSendResponse sendMessageByText(String content, List<String> mobileList, boolean isAtAll) {
         if (StringUtils.isEmpty(content)) {
             return null;
@@ -117,14 +130,16 @@ public class RobotHelperUtil {
         return response;
     }
 
-    /**
+    */
+/**
      * @description: 发送link 类型消息
      * @param title 消息标题
      * @param text  消息内容
      * @param messageUrl     点击消息后跳转的url
      * @param picUrl    插入图片的url
      * @return: com.dingtalk.api.response.OapiRobotSendResponse
-     */
+     *//*
+
     public static OapiRobotSendResponse sendMessageByLink(String title, String text, String messageUrl, String picUrl) {
         if (StringUtils.isEmpty(text)) {
             return null;
@@ -155,14 +170,16 @@ public class RobotHelperUtil {
     }
 
 
-    /**
+    */
+/**
      * @description: 发送Markdown 编辑格式的消息
      * @param title 标题
      * @param markdownText  支持markdown 编辑格式的文本信息
      * @param mobileList    消息@ 联系人
      * @param isAtAll   是否@ 全部
      * @return: com.dingtalk.api.response.OapiRobotSendResponse
-     */
+     *//*
+
     public static OapiRobotSendResponse sendMessageByMarkdown(String title, String markdownText, List<String> mobileList, boolean isAtAll) {
         if (StringUtils.isEmpty(markdownText)) {
             return null;
@@ -195,7 +212,8 @@ public class RobotHelperUtil {
         return response;
     }
 
-    /**
+    */
+/**
      * @description: 整体跳转ActionCard类型的消息发送
      * @param title 消息标题, 会话消息会展示标题
      * @param markdownText  markdown格式的消息
@@ -206,7 +224,8 @@ public class RobotHelperUtil {
      * @return: com.dingtalk.api.response.OapiRobotSendResponse
      * @author: niaonao
      * @date: 2019/7/6
-     */
+     *//*
+
     public static OapiRobotSendResponse sendMessageByActionCardSingle(String title, String markdownText, String singleTitle, String singleURL, boolean btnOrientation, boolean hideAvatar) {
         if (StringUtils.isEmpty(markdownText)) {
             return null;
@@ -241,7 +260,8 @@ public class RobotHelperUtil {
         return response;
     }
 
-    /**
+    */
+/**
      * @description: 独立跳转ActionCard类型 消息发送
      * @param title 标题
      * @param markdownText  文本
@@ -249,7 +269,8 @@ public class RobotHelperUtil {
      * @param btnOrientation    是否横向排列(true 横向排列, false 纵向排列)
      * @param hideAvatar    是否隐藏发消息者头像(true 隐藏头像, false 不隐藏)
      * @return: com.dingtalk.api.response.OapiRobotSendResponse
-     */
+     *//*
+
     public static OapiRobotSendResponse sendMessageByActionCardMulti(String title, String markdownText, List<OapiRobotSendRequest.Btns> btns, boolean btnOrientation, boolean hideAvatar) {
         if (StringUtils.isEmpty(markdownText)) {
             return null;
@@ -283,11 +304,13 @@ public class RobotHelperUtil {
         return response;
     }
 
-    /**
+    */
+/**
      * @description: 发送FeedCard类型消息
      * @param links
      * @return: com.dingtalk.api.response.OapiRobotSendResponse
-     */
+     *//*
+
     public static OapiRobotSendResponse sendMessageByFeedCard(List<OapiRobotSendRequest.Links> links) {
         if (CollectionUtils.isEmpty(links)) {
             return null;
@@ -311,7 +334,10 @@ public class RobotHelperUtil {
         return response;
     }
 
-    /*public static void main(String args[]) {
+    */
+/*public static void main(String args[]) {
         sdkDemoJava();
-    }*/
+    }*//*
+
 }
+*/

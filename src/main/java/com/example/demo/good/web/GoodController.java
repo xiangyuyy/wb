@@ -20,6 +20,7 @@ import javax.security.auth.x500.X500Principal;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.demo.concurrent.AnnotationLog;
 import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -76,6 +77,15 @@ public class GoodController {
 	private IOrderimplrecordService orderimplrecordService;
 	@Autowired
 	private DataBaseUtils utils;
+
+
+	@AnnotationLog(Paras = "#paras",ifLog = true)
+	@RequestMapping("/good/test")
+	@ResponseBody
+	public String test (String paras) {
+		return  paras;
+	}
+
 	@RequestMapping("/good/list")
 	public ModelAndView list() {
 		ModelAndView mav = new ModelAndView();

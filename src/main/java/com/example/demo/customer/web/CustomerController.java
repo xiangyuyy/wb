@@ -186,7 +186,7 @@ public class CustomerController {
 		EntityWrapper<Customer> ew = new EntityWrapper<Customer>();
 		ew.where("customerid = {0}", userId);
 		Customer model = customerService.selectOne(ew);
-		if (model.getBalance().compareTo(new BigDecimal(10)) >= 0){
+		if (model.getBalance().compareTo(new BigDecimal(10)) > 0){
 			model.setBalance(model.getBalance().subtract(new BigDecimal(1)));
 			boolean b;
 			b = customerService.updateById(model);

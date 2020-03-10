@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.example.demo.utils.RobotHelperUtil;
+/*import com.example.demo.utils.RobotHelperUtil;*/
 import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,8 +40,8 @@ public class GoodtypeServiceImplTest {
 
 	@Test
 	public void testDingdSendInfor(){
-		new RobotHelperUtil().sdkDemoJava();
-		System.out.println("21123123");
+/*		new RobotHelperUtil().sdkDemoJava();
+		System.out.println("21123123");*/
 	}
 	@Test
 	public void testGetPageList() {
