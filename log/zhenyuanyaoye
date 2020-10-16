@@ -40,7 +40,8 @@ CREATE TABLE `ums_member` (
 1.relation_id 读取1.0其他需要字段信息。
 
 2.2.0新增视图 ums_member_view 融合1.0和2.0字段。
-
+3.是否是需要展示列表的字段，如果是，同步数据不用全部同步。同步展示的字段就行。
+4.基础数据管理需要下面子菜单这些页面么？
 
 3.药监申报
 CREATE TABLE `drug_report` (
