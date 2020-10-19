@@ -53,12 +53,14 @@ CREATE TABLE `drug_report` (
   `shop_id` varchar(64) NOT NULL COMMENT '门店id',
   `shop_name` varchar(64) DEFAULT NULL COMMENT '门店名称',
   `edition` varchar(100) DEFAULT NULL COMMENT '版本',
-  `check_status` int(1) DEFAULT '0' COMMENT '审核状态：0->待审核；1->审核通过',
+  `check_status` int(1) DEFAULT '-1' COMMENT '审核状态：-1->待确定;0->待审核；1->审核通过',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `report_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '部门申报建立时间',
   `modify_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='药监申报表';
+
+
 
 CREATE TABLE `drug_report_member` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
