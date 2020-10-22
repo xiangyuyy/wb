@@ -16,14 +16,15 @@ CREATE TABLE `ums_admin` (
 1.根据1.0门店信息，初始化数据。用户名和密码根据1.0门店信息的唯一值，默认登录信息。？
 2.一个门店是否只有一个账号能够登录。？
 
+
+  `shop_id` varchar(64) NOT NULL COMMENT '门店id',
+  `shop_name` varchar(64) DEFAULT NULL COMMENT '门店名称',
+  `drug_shop_name` varchar(64) DEFAULT NULL COMMENT '药监门店名称',
 2.人员
 CREATE TABLE `ums_member` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `relation_id` varchar(64) NOT NULL COMMENT '关联1.0人员id',
-  `shop_id` varchar(64) NOT NULL COMMENT '门店id',
-  `shop_name` varchar(64) DEFAULT NULL COMMENT '门店名称',
   `drug_shop_id` varchar(64) NOT NULL COMMENT '药监门店id',
-  `drug_shop_name` varchar(64) DEFAULT NULL COMMENT '药监门店名称',
   `drug_title` varchar(100) DEFAULT NULL COMMENT '药监上报职称',
   `drug_org` varchar(100) DEFAULT NULL COMMENT '药监编制职称',
   `drug_education` varchar(100) DEFAULT NULL COMMENT '药监学历',
@@ -46,26 +47,27 @@ CREATE TABLE `ums_member` (
 3.是否是需要展示列表的字段，如果是，同步数据不用全部同步。同步展示的字段就行。
 4.基础数据管理需要下面子菜单这些页面么？
 
+  `shop_name` varchar(64) DEFAULT NULL COMMENT '门店名称',
+
 3.药监申报
 CREATE TABLE `drug_report` (
   `id` varchar(64) NOT NULL COMMENT '单号',
   `check_status` int(1) DEFAULT '0' COMMENT '审核状态：0->待审核；1->审核通过',
   `shop_id` varchar(64) NOT NULL COMMENT '门店id',
-  `shop_name` varchar(64) DEFAULT NULL COMMENT '门店名称',
-  `edition` varchar(100) DEFAULT NULL COMMENT '版本',
   `check_status` int(1) DEFAULT '-1' COMMENT '审核状态：-1->待确定;0->待审核；1->审核通过',
+  `operator_id` varchar(64) NOT NULL COMMENT '操作人id',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `report_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '部门申报建立时间',
   `modify_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='药监申报表';
 
-
+  `relation_id` varchar(64) NOT NULL COMMENT '关联1.0人员id',
+  
 CREATE TABLE `drug_report_member` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `report_id` varchar(64) NOT NULL COMMENT '单号',
   `member_id` varchar(64) NOT NULL COMMENT '2.0人员id',
-  `relation_id` varchar(64) NOT NULL COMMENT '关联1.0人员id',
   `drug_shop_id` varchar(64) NOT NULL COMMENT '药监门店id',
   `drug_shop_name` varchar(64) DEFAULT NULL COMMENT '药监门店名称',
   `drug_title` varchar(100) DEFAULT NULL COMMENT '药监上报职称',
@@ -106,14 +108,16 @@ CREATE TABLE `drug_count` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='药监计算信息';
 
+
+  `shop_name` varchar(64) DEFAULT NULL COMMENT '门店名称',
+   `drug_shop_name` varchar(64) DEFAULT NULL COMMENT '药监门店名称',
+  
 变更记录
 CREATE TABLE `ums_member_record` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `relation_id` varchar(64) NOT NULL COMMENT '关联1.0人员id',
   `shop_id` varchar(64) NOT NULL COMMENT '门店id',
-  `shop_name` varchar(64) DEFAULT NULL COMMENT '门店名称',
   `drug_shop_id` varchar(64) NOT NULL COMMENT '药监门店id',
-  `drug_shop_name` varchar(64) DEFAULT NULL COMMENT '药监门店名称',
   `drug_title` varchar(100) DEFAULT NULL COMMENT '药监上报职称',
   `drug_org` varchar(100) DEFAULT NULL COMMENT '药监编制职称',
   `drug_education` varchar(100) DEFAULT NULL COMMENT '药监学历',
@@ -121,28 +125,29 @@ CREATE TABLE `ums_member_record` (
   `drug_position` varchar(100) DEFAULT NULL COMMENT '职务或岗位',
   `work_time` datetime DEFAULT NULL COMMENT '参加专业工作时间',
   `change_reason` varchar(200) DEFAULT NULL COMMENT '变更原因',
+  `operator_id` varchar(64) NOT NULL COMMENT '操作人id',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `modify_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='变更记录';
 
 实现设计
-
+operator_id 就是当前登录人的id
 问题
 1.药监计算出来的结果是和门店信息挂钩。
 2.变更具体实现。变更和直接修改人员信息的区别。变更同时修改人员信息。
 3.权限菜单明确。
 
 
-1.登录2.0 只初始化一个admin 登录用户，admin用户去创建登录用户信息，可能做一个绑定门店信息。用户门店登录。
+1.登录2.0 只初始化一个admin 登录用户，admin用户去创建登录用户信息，选择一个组织。
 
-2.人员信息仅仅是有同步和展示 门店下的人员信息 还是全部的人员信息。 如果是全部人员信息需要展示所属组织机构么。
+2.人员信息仅仅是有同步和展示同步部分数据。
 
 3.人员信息其他详情 比如合同，展示信息  最好是给个1.0里面的原型。不然后面用户想不一致 返工麻烦。
 
 4.组织机构 最好是给个1.0里面的原型。不然后面和用户想的不一致 返工麻烦。
 
-5.组织机构表中 有么字段标识是门店的。
+5.组织机构表中 等级6的。
 
-6.区域字段是哪一个。
+6.区域就是部门等级5的。
 
