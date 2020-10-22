@@ -78,10 +78,10 @@ CREATE TABLE `drug_report_member` (
   `education_status` int(1) DEFAULT '1' COMMENT '是否继续教育：0->否；1->是',
   `health_status` int(1) DEFAULT '1' COMMENT '是否参加培训：0->否；1->是',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='药监申报人员详情';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='药监申报人员详情记录表';
 
 
-
+确定之后将基本信息写入表中，之前都不写入，关联用户id获得基础信息。
 初始化为待确定状态。
 清空删除 drug_report_membe。
 确定改状态为待审核。日期，操作人等更新。
