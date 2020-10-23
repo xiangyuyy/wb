@@ -21,7 +21,7 @@ CREATE TABLE `ums_admin` (
   `shop_name` varchar(64) DEFAULT NULL COMMENT '门店名称',
   `drug_shop_name` varchar(64) DEFAULT NULL COMMENT '药监门店名称',
 2.人员
-CREATE TABLE `ums_member` (
+CREATE TABLE `member` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `relation_id` varchar(64) NOT NULL COMMENT '关联1.0人员id',
   `drug_shop_id` varchar(64) NOT NULL COMMENT '药监门店id',
