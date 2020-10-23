@@ -25,13 +25,13 @@ CREATE TABLE `ums_member` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `relation_id` varchar(64) NOT NULL COMMENT '关联1.0人员id',
   `drug_shop_id` varchar(64) NOT NULL COMMENT '药监门店id',
-  `drug_title_id` varchar(100) DEFAULT NULL COMMENT '药监上报职称',
-  `drug_org_id` varchar(100) DEFAULT NULL COMMENT '药监编制职称',
-  `drug_education_id` varchar(100) DEFAULT NULL COMMENT '药监学历',
-  `drug_major_id` varchar(100) DEFAULT NULL COMMENT '药监专业',
-  `drug_position_one_id` varchar(100) DEFAULT NULL COMMENT '职务或岗位1',
-  `drug_position_two_id` varchar(100) DEFAULT NULL COMMENT '职务或岗位2',
-  `drug_position_three_id` varchar(100) DEFAULT NULL COMMENT '职务或岗位3',
+  `drug_title_id` varchar(64) DEFAULT NULL COMMENT '药监上报职称',
+  `drug_org_id` varchar(64) DEFAULT NULL COMMENT '药监编制职称',
+  `drug_education_id` varchar(64) DEFAULT NULL COMMENT '药监学历',
+  `drug_major_id` varchar(64) DEFAULT NULL COMMENT '药监专业',
+  `drug_position_one_id` varchar(64) DEFAULT NULL COMMENT '职务或岗位1',
+  `drug_position_two_id` varchar(64) DEFAULT NULL COMMENT '职务或岗位2',
+  `drug_position_three_id` varchar(64) DEFAULT NULL COMMENT '职务或岗位3',
   `work_time` datetime DEFAULT NULL COMMENT '参加专业工作时间',
   `health_status` int(1) DEFAULT '1' COMMENT '健康状况：0->不健康；1->健康',
   `education_status` int(1) DEFAULT '1' COMMENT '是否继续教育：0->否；1->是',
@@ -52,7 +52,6 @@ CREATE TABLE `ums_member` (
 3.药监申报
 CREATE TABLE `drug_report` (
   `id` varchar(64) NOT NULL COMMENT '单号',
-  `check_status` int(1) DEFAULT '0' COMMENT '审核状态：0->待审核；1->审核通过',
   `shop_id` varchar(64) NOT NULL COMMENT '门店id',
   `check_status` int(1) DEFAULT '-1' COMMENT '审核状态：-1->待确定;0->待审核；1->审核通过',
   `operator_id` varchar(64) NOT NULL COMMENT '操作人id',
@@ -69,17 +68,17 @@ CREATE TABLE `drug_report_member` (
   `report_id` varchar(64) NOT NULL COMMENT '单号',
   `member_id` varchar(64) NOT NULL COMMENT '2.0人员id',
   `drug_shop_id` varchar(64) NOT NULL COMMENT '药监门店id',
-  `drug_title_id` varchar(100) DEFAULT NULL COMMENT '药监上报职称',
-  `drug_org_id` varchar(100) DEFAULT NULL COMMENT '药监编制职称',
-  `drug_education_id` varchar(100) DEFAULT NULL COMMENT '药监学历',
-  `drug_major_id` varchar(100) DEFAULT NULL COMMENT '药监专业',
-  `drug_position_one_id` varchar(100) DEFAULT NULL COMMENT '职务或岗位1',
-  `drug_position_two_id` varchar(100) DEFAULT NULL COMMENT '职务或岗位2',
-  `drug_position_three_id` varchar(100) DEFAULT NULL COMMENT '职务或岗位3',
+  `drug_title_id` varchar(64) DEFAULT NULL COMMENT '药监上报职称',
+  `drug_org_id` varchar(64) DEFAULT NULL COMMENT '药监编制职称',
+  `drug_education_id` varchar(64) DEFAULT NULL COMMENT '药监学历',
+  `drug_major_id` varchar(64) DEFAULT NULL COMMENT '药监专业',
+  `drug_position_one_id` varchar(64) DEFAULT NULL COMMENT '职务或岗位1',
+  `drug_position_two_id` varchar(64) DEFAULT NULL COMMENT '职务或岗位2',
+  `drug_position_three_id` varchar(64) DEFAULT NULL COMMENT '职务或岗位3',
   `work_time` datetime DEFAULT NULL COMMENT '参加专业工作时间',
   `health_status` int(1) DEFAULT '1' COMMENT '健康状况：0->不健康；1->健康',
   `education_status` int(1) DEFAULT '1' COMMENT '是否继续教育：0->否；1->是',
-  `health_status` int(1) DEFAULT '1' COMMENT '是否参加培训：0->否；1->是',
+  `train_status` int(1) DEFAULT '1' COMMENT '是否参加培训：0->否；1->是',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='药监申报人员详情记录表';
 
@@ -96,7 +95,6 @@ CREATE TABLE `drug_report_member` (
 
 药监计算信息
 CREATE TABLE `drug_count` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `shop_id` varchar(64) NOT NULL COMMENT '门店id',
   `subjection` int(1) DEFAULT NULL COMMENT '行政隶属：1->市区；2->乡镇；3->村',
   `chinese_medicine` int(1) DEFAULT NULL COMMENT '有无中药：0->无；1->有',
@@ -106,9 +104,8 @@ CREATE TABLE `drug_count` (
   `pra_chinese_pharmacist` int(11) DEFAULT NULL COMMENT '执业中药师',
   `pharmacist` int(11) DEFAULT NULL COMMENT '药师',
   `mechanic` int(11) DEFAULT NULL COMMENT '技工',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`shop_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='药监计算信息';
-
 
   `shop_name` varchar(64) DEFAULT NULL COMMENT '门店名称',
    `drug_shop_name` varchar(64) DEFAULT NULL COMMENT '药监门店名称',
