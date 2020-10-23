@@ -120,3 +120,12 @@ CREATE TABLE `usra65` (
   `CreateTime` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `ModTime` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='返聘信息表';
+
+CREATE TABLE `codeitem` (
+  `codesetid` varchar(10) NOT NULL COMMENT 'codesetid-AM',
+  `codeitemid` varchar(64) DEFAULT NULL COMMENT 'id',
+  `codeitemdesc` varchar(64) DEFAULT NULL COMMENT '描述',
+ 
+  `CreateTime` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `ModTime` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='枚举类型表';
