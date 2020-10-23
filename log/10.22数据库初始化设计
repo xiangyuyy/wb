@@ -36,6 +36,7 @@ CREATE TABLE `usra01` (
   `A0146` varchar(256) DEFAULT NULL COMMENT '电子邮箱',
   `A0119` varchar(256) DEFAULT NULL COMMENT '现住址',
   `A0134` varchar(10) DEFAULT NULL COMMENT '最高学历AM',
+  `A0130` varchar(64) DEFAULT NULL COMMENT '专业',
   `A0144` varchar(64) DEFAULT NULL COMMENT '人员编码',
   `A01AD` text DEFAULT NULL COMMENT '信息备注',
   
