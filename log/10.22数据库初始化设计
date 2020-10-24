@@ -2,12 +2,12 @@ msql同步表
 
 CREATE TABLE `organization` (
   `codeitemid` varchar(64) NOT NULL COMMENT '组织机构id',
-  `codesetid` varchar(10) DEFAULT NULL COMMENT '类型',
-  `codeitemdesc` varchar(64) DEFAULT NULL COMMENT '组织名称',
-  `parentid` varchar(64) DEFAULT NULL COMMENT '上级编码',
-  `childid` varchar(64) DEFAULT NULL COMMENT '下级编码',
+  `codesetid` varchar(10) DEFAULT '' COMMENT '类型',
+  `codeitemdesc` varchar(64) DEFAULT '' COMMENT '组织名称',
+  `parentid` varchar(64) DEFAULT '' COMMENT '上级编码',
+  `childid` varchar(64) DEFAULT '' COMMENT '下级编码',
   `grade` int(10) DEFAULT NULL COMMENT '组织层级',
-  `state` varchar(10) DEFAULT NULL COMMENT '状态',
+  `state` varchar(10) DEFAULT '' COMMENT '状态',
   `start_date` datetime DEFAULT NULL COMMENT '有效时间始',
   `end_date` datetime DEFAULT NULL COMMENT '有效时间止',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -18,44 +18,43 @@ CREATE TABLE `organization` (
 
 CREATE TABLE `usra01` (
   `A0100` varchar(10) NOT NULL COMMENT '人员id',
-  `B0110` varchar(64) DEFAULT NULL COMMENT '组织机构id',
+  `B0110` varchar(64) DEFAULT '' COMMENT '组织机构id',
   `A0111` datetime DEFAULT NULL COMMENT '出生日期',
   `A0141` datetime DEFAULT NULL COMMENT '参加工作时间',
-  `A0107` varchar(10) DEFAULT NULL COMMENT '性别AX',
-  `A0177` varchar(64) DEFAULT NULL COMMENT '身份证号',
-  `A0121` varchar(10) DEFAULT NULL COMMENT '民族AE',
-  `A0114` varchar(10) DEFAULT NULL COMMENT '籍贯AB',
-  `A0171` varchar(256) DEFAULT NULL COMMENT '户口所在地',
-  `A0101` varchar(64) DEFAULT NULL COMMENT '姓名',
-  `A0174` varchar(10) DEFAULT NULL COMMENT '户口性质HP',
+  `A0107` varchar(10) DEFAULT '' COMMENT '性别AX',
+  `A0177` varchar(64) DEFAULT '' COMMENT '身份证号',
+  `A0121` varchar(10) DEFAULT '' COMMENT '民族AE',
+  `A0114` varchar(10) DEFAULT '' COMMENT '籍贯AB',
+  `A0171` varchar(256) DEFAULT '' COMMENT '户口所在地',
+  `A0101` varchar(64) DEFAULT '' COMMENT '姓名',
+  `A0174` varchar(10) DEFAULT '' COMMENT '户口性质HP',
   `A0112` int(10) DEFAULT NULL COMMENT '年龄',
-  `A0103` varchar(64) DEFAULT NULL COMMENT '拼音简码',
-  `A0148` varchar(64) DEFAULT NULL COMMENT '手机号码',
-  `A0183` varchar(10) DEFAULT NULL COMMENT '人员类别XL',
+  `A0103` varchar(64) DEFAULT '' COMMENT '拼音简码',
+  `A0148` varchar(64) DEFAULT '' COMMENT '手机号码',
+  `A0183` varchar(10) DEFAULT '' COMMENT '人员类别XL',
   `A0142` datetime DEFAULT NULL COMMENT '到本单位时间',
-  `A0146` varchar(256) DEFAULT NULL COMMENT '电子邮箱',
-  `A0119` varchar(256) DEFAULT NULL COMMENT '现住址',
-  `A0134` varchar(10) DEFAULT NULL COMMENT '最高学历AM',
-  `A0130` varchar(64) DEFAULT NULL COMMENT '专业',
-  `A0144` varchar(64) DEFAULT NULL COMMENT '人员编码',
+  `A0146` varchar(256) DEFAULT '' COMMENT '电子邮箱',
+  `A0119` varchar(256) DEFAULT '' COMMENT '现住址',
+  `A0134` varchar(10) DEFAULT '' COMMENT '最高学历AM',
+  `A0130` varchar(64) DEFAULT '' COMMENT '专业',
+  `A0144` varchar(64) DEFAULT '' COMMENT '人员编码',
   `A01AD` text DEFAULT NULL COMMENT '信息备注',
-  
   `CreateTime` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `ModTime` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`A0100`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='人员基础信息表';
 
 
+
 CREATE TABLE `usra04` (
   `A0100` varchar(10) NOT NULL COMMENT '人员id',
-  `A0449` varchar(10) DEFAULT NULL COMMENT '学历性质DC',
-  `A0405` varchar(10) DEFAULT NULL COMMENT '学历AM',
-  `A0444` varchar(64) DEFAULT NULL COMMENT '所学专业（描述）',
-  `A0435` varchar(10) DEFAULT NULL COMMENT '毕业学校',
-  `A04AC` varchar(10) DEFAULT NULL COMMENT '是否管理',
-  `A0410` varchar(10) DEFAULT NULL COMMENT '所学专业AI',
-  `A04AD` varchar(10) DEFAULT NULL COMMENT '是否最高学历',
-  
+  `A0449` varchar(10) DEFAULT '' COMMENT '学历性质DC',
+  `A0405` varchar(10) DEFAULT '' COMMENT '学历AM',
+  `A0444` varchar(64) DEFAULT '' COMMENT '所学专业（描述）',
+  `A0435` varchar(10) DEFAULT '' COMMENT '毕业学校',
+  `A04AC` varchar(10) DEFAULT '' COMMENT '是否管理',
+  `A0410` varchar(10) DEFAULT '' COMMENT '所学专业AI',
+  `A04AD` varchar(10) DEFAULT '' COMMENT '是否最高学历',
   `CreateTime` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `ModTime` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`A0100`)
@@ -65,12 +64,11 @@ CREATE TABLE `usra04` (
 
 CREATE TABLE `usra71` (
   `A0100` varchar(10) NOT NULL COMMENT '人员id',
-  `A7104` varchar(10) DEFAULT NULL COMMENT '合同类型BT',
+  `A7104` varchar(10) DEFAULT '' COMMENT '合同类型BT',
   `A7110` datetime DEFAULT NULL COMMENT '合同终止时间',
   `A7105` datetime DEFAULT NULL COMMENT '合同起始时间',
   `A7125` datetime DEFAULT NULL COMMENT '实际终止时间',
-  `A7130` varchar(256) DEFAULT NULL COMMENT '合同备注',
-
+  `A7130` varchar(256) DEFAULT '' COMMENT '合同备注',
   `CreateTime` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `ModTime` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`A0100`)
@@ -80,9 +78,8 @@ CREATE TABLE `usra71` (
 CREATE TABLE `usra22` (
   `A0100` varchar(10) NOT NULL COMMENT '人员id',
   `A2210` datetime DEFAULT NULL COMMENT '参加党派时间',
-  `A2205` varchar(10) DEFAULT NULL COMMENT '政治面貌AT',
-  `A2230` varchar(10) DEFAULT NULL COMMENT '异常类别CA',
-
+  `A2205` varchar(10) DEFAULT '' COMMENT '政治面貌AT',
+  `A2230` varchar(10) DEFAULT '' COMMENT '异常类别CA',
   `CreateTime` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `ModTime` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`A0100`)
@@ -92,19 +89,17 @@ CREATE TABLE `usra22` (
 CREATE TABLE `usra66` (
   `A0100` varchar(10) NOT NULL COMMENT '人员id',
   `a6605` datetime DEFAULT NULL COMMENT '离职日期',
-  `a6607` varchar(10) DEFAULT NULL COMMENT '离职原因DK',
+  `a6607` varchar(10) DEFAULT '' COMMENT '离职原因DK',
   `a6609` text DEFAULT NULL COMMENT '离职说明',
-  `A66AA` varchar(10) DEFAULT NULL COMMENT '离职前类别XL',
-  
+  `A66AA` varchar(10) DEFAULT '' COMMENT '离职前类别XL',
   `CreateTime` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `ModTime` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`A0100`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='离职信息表';
 
-
 CREATE TABLE `usra64` (
   `A0100` varchar(10) NOT NULL COMMENT '人员id',
-  `a6405` varchar(10) DEFAULT NULL COMMENT '离退类别HD',
+  `a6405` varchar(10) DEFAULT '' COMMENT '离退类别HD',
   `a6410` datetime DEFAULT NULL COMMENT '离退日期',
   `a6416` datetime DEFAULT NULL COMMENT '办理时间',
   `A6411` text DEFAULT NULL COMMENT '离退原因',
@@ -114,15 +109,15 @@ CREATE TABLE `usra64` (
   PRIMARY KEY (`A0100`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='离退信息表';
 
+
 CREATE TABLE `usra65` (
   `A0100` varchar(10) NOT NULL COMMENT '人员id',
-  `a6501` varchar(256) DEFAULT NULL COMMENT '返聘单位',
-  `a6502` varchar(10) DEFAULT NULL COMMENT '返聘类别',
+  `a6501` varchar(256) DEFAULT '' COMMENT '返聘单位',
+  `a6502` varchar(10) DEFAULT '' COMMENT '返聘类别',
   `a6503` datetime DEFAULT NULL COMMENT '返聘起始时间',
   `A6504` datetime DEFAULT NULL COMMENT '返聘终止时间',
   `A6506` text DEFAULT NULL COMMENT '返聘原因',
-  `A6507` varchar(256) DEFAULT NULL COMMENT '返聘岗位',
-  
+  `A6507` varchar(256) DEFAULT '' COMMENT '返聘岗位',
   `CreateTime` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `ModTime` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`A0100`)
@@ -130,9 +125,8 @@ CREATE TABLE `usra65` (
 
 CREATE TABLE `codeitem` (
   `codesetid` varchar(10) NOT NULL COMMENT 'codesetid-AM',
-  `codeitemid` varchar(64) DEFAULT NULL COMMENT 'id',
-  `codeitemdesc` varchar(64) DEFAULT NULL COMMENT '描述',
- 
+  `codeitemid` varchar(64) DEFAULT '' COMMENT 'id',
+  `codeitemdesc` varchar(64) DEFAULT '' COMMENT '描述',
   `CreateTime` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `ModTime` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='枚举类型表';
