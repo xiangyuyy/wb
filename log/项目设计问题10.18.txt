@@ -67,6 +67,7 @@ CREATE TABLE `drug_report_member` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `report_id` varchar(64) NOT NULL COMMENT '单号',
   `member_id` varchar(64) NOT NULL COMMENT '2.0人员id',
+  `relation_id` varchar(64) NOT NULL COMMENT '关联1.0人员id',
   `drug_shop_id` varchar(64) DEFAULT '' COMMENT '药监门店id',
   `drug_title_id` varchar(64) DEFAULT '' COMMENT '药监上报职称',
   `drug_org_id` varchar(64) DEFAULT '' COMMENT '药监编制职称',
