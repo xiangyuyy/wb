@@ -19,6 +19,7 @@ CREATE TABLE `organization` (
 CREATE TABLE `usra01` (
   `A0100` varchar(10) NOT NULL COMMENT '人员id',
   `B0110` varchar(64) DEFAULT '' COMMENT '组织机构id',
+  `E0122` varchar(64) DEFAULT '' COMMENT '门店对应组织机构id',
   `A0111` datetime DEFAULT NULL COMMENT '出生日期',
   `A0141` datetime DEFAULT NULL COMMENT '参加工作时间',
   `A0107` varchar(10) DEFAULT '' COMMENT '性别AX',
