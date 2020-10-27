@@ -54,7 +54,7 @@ CREATE TABLE `drug_report` (
   `id` varchar(64) NOT NULL COMMENT '单号',
   `shop_id` varchar(64) NOT NULL COMMENT '门店id',
   `check_status` int(1) DEFAULT '-1' COMMENT '审核状态：-1->待确定;0->待审核；1->审核通过',
-  `operator_id` varchar(64) NOT NULL COMMENT '操作人id',
+  `operator_id` varchar(64) DEFAULT '' COMMENT '操作人id',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `report_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '部门申报建立时间',
   `modify_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
