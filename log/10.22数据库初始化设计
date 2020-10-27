@@ -52,13 +52,12 @@ CREATE TABLE `usra04` (
   `A0449` varchar(10) DEFAULT '' COMMENT '学历性质DC',
   `A0405` varchar(10) DEFAULT '' COMMENT '学历AM',
   `A0444` varchar(64) DEFAULT '' COMMENT '所学专业（描述）',
-  `A0435` varchar(10) DEFAULT '' COMMENT '毕业学校',
-  `A04AC` varchar(10) DEFAULT '' COMMENT '是否管理',
-  `A0410` varchar(10) DEFAULT '' COMMENT '所学专业AI',
-  `A04AD` varchar(10) DEFAULT '' COMMENT '是否最高学历',
+  `A0435` varchar(64) DEFAULT '' COMMENT '毕业学校',
+  `A04AC` varchar(64) DEFAULT '' COMMENT '是否管理',
+  `A0410` varchar(64) DEFAULT '' COMMENT '所学专业AI',
+  `A04AD` varchar(64) DEFAULT '' COMMENT '是否最高学历',
   `CreateTime` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `ModTime` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  PRIMARY KEY (`A0100`)
+  `ModTime` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='学历学位信息表';
 
 
