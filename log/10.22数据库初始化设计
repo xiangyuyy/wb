@@ -132,7 +132,7 @@ CREATE TABLE `codeitem` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='枚举类型表';
 
 
-CREATE TABLE `usra65` (
+CREATE TABLE `v_zhicheng` (
   `A0100` varchar(64) NOT NULL COMMENT '人员id',
   `zcjb` varchar(256) DEFAULT '' COMMENT '职称',
   `zcsj` datetime DEFAULT NULL COMMENT '职称时间',
