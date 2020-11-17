@@ -72,6 +72,7 @@ CREATE TABLE `drug_report_member` (
   `drug_shop_id` varchar(64) DEFAULT '' COMMENT '药监门店id',
   `drug_title_id` varchar(64) DEFAULT '' COMMENT '药监上报职称',
   `drug_org_id` varchar(64) DEFAULT '' COMMENT '药监编制职称',
+  `education_id` varchar(64) DEFAULT '' COMMENT '学历',
   `drug_education_id` varchar(64) DEFAULT '' COMMENT '药监学历',
   `drug_major_id` varchar(64) DEFAULT '' COMMENT '药监专业',
   `drug_position_one_id` varchar(64) DEFAULT '' COMMENT '职务或岗位1',
