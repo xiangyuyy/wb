@@ -27,6 +27,7 @@ CREATE TABLE `member` (
   `drug_shop_id` varchar(64) DEFAULT '' COMMENT '药监门店id',
   `drug_title_id` varchar(64) DEFAULT '' COMMENT '药监上报职称',
   `drug_org_id` varchar(64) DEFAULT '' COMMENT '药监编制职称',
+  `education_id` varchar(64) DEFAULT '' COMMENT '学历',
   `drug_education_id` varchar(64) DEFAULT '' COMMENT '药监学历',
   `drug_major_id` varchar(64) DEFAULT '' COMMENT '药监专业',
   `drug_position_one_id` varchar(64) DEFAULT '' COMMENT '职务或岗位1',
@@ -106,6 +107,8 @@ CREATE TABLE `drug_count` (
   `pra_chinese_pharmacist` int(11) DEFAULT NULL COMMENT '执业中药师',
   `pharmacist` int(11) DEFAULT NULL COMMENT '药师',
   `mechanic` int(11) DEFAULT NULL COMMENT '技工',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `modify_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`shop_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='药监计算信息';
 
