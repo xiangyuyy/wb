@@ -1,3 +1,12 @@
+高于编制视图：
+  `pra_pharmacist` int(11) DEFAULT NULL COMMENT '执业药师',
+  `pra_chinese_pharmacist` int(11) DEFAULT NULL COMMENT '执业中药师',
+  `pharmacist` int(11) DEFAULT NULL COMMENT '药师',
+  
+(select d.shop_id,d.pra_pharmacist as num,'pra_pharmacist' as type,t.nownum from drug_count d left join (select r.drug_shop_id,count(*) as nownum from drug_report_member r left join member m on r.member_id = m.id where m. drug_org_id == '') as result t on d.shop_id = t.drug_shop_id) union all 
+
+m.drug_org_id 还是 人员编制。
+
 bugs:
 1.变更修改操作之后直接改了member信息和变更新增直接新增了药监信息item。加了一条对应的待审核的变更记录，不显示出来，审核后改状态显示变更记录。
 2.定时任务更新 1.0的数据 是全部删除后重新批量插入的。
