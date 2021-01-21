@@ -3,9 +3,15 @@
   `pra_chinese_pharmacist` int(11) DEFAULT NULL COMMENT '执业中药师',
   `pharmacist` int(11) DEFAULT NULL COMMENT '药师',
   
-(select d.shop_id,d.pra_pharmacist as num,'pra_pharmacist' as type,t.nownum from drug_count d left join (select r.drug_shop_id,count(*) as nownum from drug_report_member r left join member m on r.member_id = m.id where m. drug_org_id == '') as result t on d.shop_id = t.drug_shop_id) union all 
+(select d.shop_id,d.pra_pharmacist as num,'执业药师' as type,t.nownum from drug_count d left join (select r.drug_shop_id,count(*) as nownum from drug_report_member r left join member m on r.member_id = m.id where m.drug_org_id = '') as t on d.shop_id = t.drug_shop_id) union all 
+(select d1.shop_id,d1.pra_chinese_pharmacist as num,'执业中药师' as type,t1.nownum from drug_count d1 left join (select r1.drug_shop_id,count(*) as nownum from drug_report_member r1 left join member m1 on r1.member_id = m1.id where m1.drug_org_id = '') as t1 on d1.shop_id = t1.drug_shop_id) union all
+(select d2.shop_id,d2.pharmacist as num,'药师' as type,t2.nownum from drug_count d2 left join (select r2.drug_shop_id,count(*) as nownum from drug_report_member r2 left join member m2 on r2.member_id = m2.id where m2.drug_org_id = '') as t2 on d2.shop_id = t2.drug_shop_id)
 
 m.drug_org_id 还是 人员编制。
+
+搜索 空处理 " ".
+
+
 
 bugs:
 1.变更修改操作之后直接改了member信息和变更新增直接新增了药监信息item。加了一条对应的待审核的变更记录，不显示出来，审核后改状态显示变更记录。
