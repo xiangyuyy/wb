@@ -10,6 +10,11 @@ import {
   getDrugPosition,
   
  处新增方法适配
+ 
+ 药监学历   药监专业  
+filterable
+clearable
+去掉  ??
 
 3.前后端页面药监学校选择适配。几个列表的适配药监学校。
 
