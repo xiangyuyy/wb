@@ -4,6 +4,8 @@
 
 2.学历下拉框选项修改。
 
+url: '/member/getMemberEducation/' + id,  新增 url: '/member/getMemberSchool/' + id       <el-form-item label="岗位一">
+
 3.前后端页面药监学校选择适配。几个列表的适配药监学校。
 
 4.人员全部导出  药监计算结果导出  人员变更记录导出。
