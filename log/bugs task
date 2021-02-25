@@ -4,7 +4,12 @@
 
 2.学历下拉框选项修改。
 
-url: '/member/getMemberEducation/' + id,  新增 url: '/member/getMemberSchool/' + id       <el-form-item label="岗位一">
+url: '/member/getMemberEducation/' + id,  新增 url: '/member/getMemberSchool/' + id       <el-form-item label="岗位一">   搜索  commit-form 相关接口
+
+import {
+  getDrugPosition,
+  
+ 处新增方法适配
 
 3.前后端页面药监学校选择适配。几个列表的适配药监学校。
 
