@@ -47,6 +47,10 @@ clearable
  3.新增 exportMemberList  适配新增   新增导出 参考 ExportVRportDto。 getMemberList 适配不分页查询
  
  4. 新增 exportShopMemberRecordList 适配新增  新增导出 参考 ExportVRportDto。  getShopMemberRecordList 适配不分页查询
+ 
+ 
+ 
+ 5.前端 页面字段显示调整。
 
 
 
