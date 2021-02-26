@@ -27,7 +27,7 @@ clearable
  getDrugReportMemberList,
  后台获得drugSchool 逻辑修改 之前是04表取的。
  
-前端相关list页面新增药监学校和显示顺序调整。
+前端：相关list页面新增药监学校和显示顺序调整。Roster.vue  "职称（获得时间）", "学历 ", "专业",都是药监 然后加药监学校字段。
   
  
  
