@@ -16,9 +16,38 @@ filterable
 clearable
 去掉  ??
 
-3.前后端页面药监学校选择适配。几个列表的适配药监学校。
+
+3.前后端页面药监学校选择适配。几个列表的适配药监学校。、
+
+后端接口：/getMemberList 2个接口返回 新增并赋值
+    @ApiModelProperty(value = "药监学校")
+    private String drugSchool; 
+    
+ getDrugReportList,
+ getDrugReportMemberList,
+ 后台获得drugSchool 逻辑修改 之前是04表取的。
+  
+ 
+ 
 
 4.人员全部导出  药监计算结果导出  门店申报变更记录查询导出。
+
+/opm/person/index.vue  新增导出所有
+/dsd/result.vue  新增导出所有
+/dsd/shopChangeRecord.vue 新增导出
+
+
+后端 ：
+1. 修改 exportDrugReport 导出 "职称（获得时间）", "学历 ", "专业",都是药监 然后加药监学校字段
+适配不分页查询
+2.新增 exportDrugCountList 适配新增   新增导出 参考 ExportVRportDto。 内容参考MemberListDto。 getDrugCountList 适配不分页查询
+
+ String[] headers = {"门店", "行政隶属", "有无中药", "是否远程", "经营面积", "执业药师", "执业中药师", "药师", "技工"};
+ 
+ 3.新增 exportMemberList  适配新增   新增导出 参考 ExportVRportDto。 getMemberList 适配不分页查询
+ 
+ 4. 新增 exportShopMemberRecordList 适配新增  新增导出 参考 ExportVRportDto。  getShopMemberRecordList 适配不分页查询
+
 
 
 
