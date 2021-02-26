@@ -26,6 +26,8 @@ clearable
  getDrugReportList,
  getDrugReportMemberList,
  后台获得drugSchool 逻辑修改 之前是04表取的。
+ 
+前端相关list页面新增药监学校和显示顺序调整。
   
  
  
