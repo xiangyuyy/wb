@@ -1,3 +1,26 @@
+3-10
+
+组织人员数据同步。
+
+1.撤销已提交变更
+控制台加一个 撤销提交变更。根据 变更记录是否存在变更中的数据。
+删除 变更记录 变更中的数据
+删除  DrugReportMember 中变更中的数据。
+
+            //变更记录状态 
+            MemberRecordExample memberRecordExample = new MemberRecordExample();
+            MemberRecordExample.Criteria criteria1 = memberRecordExample.createCriteria();
+            criteria1.andReportShopIdEqualTo(shopId);
+            criteria1.andStatusEqualTo(0);//变更中
+            List<MemberRecord> list1 = memberRecordMapper.selectByExample(memberRecordExample);
+            if (list1.size() > 0){
+                list1.forEach(x->{
+                    x.setStatus(1);
+                    memberRecordMapper.updateByPrimaryKeySelective(x);
+                });
+            }
+
+
 2-25
 
 1.member 表新增 drug_school 代码适配。
