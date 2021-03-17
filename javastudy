@@ -5,3 +5,6 @@ https://blog.csdn.net/xurk0922/article/details/108036810
 2.kafka多个消费者消费一个topic_kafka中partition和消费者对应关系
 
 https://blog.csdn.net/weixin_34450092/article/details/112076292
+
+SpringBoot+Redisson+AOP实现分布式锁，防重复提交
+https://blog.csdn.net/qq_36798969/article/details/105004715
