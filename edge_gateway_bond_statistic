@@ -1,0 +1,259 @@
+#!/usr/bin/env python
+import commands
+import os
+import re
+import copy
+import time
+import json
+
+BASE_PATH = '/home/openstack/cloud_monitor_center_metrics/'
+
+
+class BondStatistics(object):
+    TEMPLATE_NIC = {
+        'common.trunk': 'unknown', 'common.interval': 1, 'common.link_speed': 0,
+        'common.mac_address': 'unknown', 'common.loss': 0, 'nic.link_status': 'unknown',
+        'nic.mtu': 0, 'nic.mac_address': 'unknown', 'nic.status': 'unknown',
+        'nic.rx_bps': 0, 'nic.rx_pps': 0, 'nic.tx_bps': 0, 'nic.tx_pps': 0
+    }
+
+    def __init__(self):
+        super(BondStatistics, self).__init__()
+        self.interval = 5
+        self.times = 3
+        if not os.path.isdir(BASE_PATH):
+            os.mkdir(BASE_PATH, 0o755)
+        self.nic_info_file = os.path.join(BASE_PATH, 'edge_gateway_bond_info.json')
+
+    @staticmethod
+    def execute(cmd):
+        status, output = commands.getstatusoutput(cmd)
+        return status >> 8, output
+
+    def detect(self):
+        current_data = {}
+        prev_data = {}
+        nic_list = {}
+
+        for n in range(self.times):
+            self.get_evs_nic_statistics(current_data)
+
+            if n == 0:
+                try:
+                    with open(self.nic_info_file) as f:
+                        prev_data = json.load(f)
+                except Exception:
+                    pass
+
+            if prev_data and current_data:
+                if not nic_list:
+                    self._init_nic_list(current_data['statistics'].keys(),
+                                        nic_list)
+                interval = current_data['epoch'] - prev_data['epoch']
+                for nic, stat in current_data['statistics'].items():
+                    if nic not in prev_data['statistics']:
+                        continue
+                    nic_info = nic_list[nic]
+                    nic_info['common.interval'] = self.interval
+
+                    for i in ('rx', 'tx'):
+                        pkts = '{0}_pkts'.format(i)
+                        byts = '{0}_bytes'.format(i)
+                        drps = '{0}_drop'.format(i)
+                        pps = 'nic.{0}_pps'.format(i)
+                        bps = 'nic.{0}_bps'.format(i)
+                        nic_info[pps] += (stat[pkts] - prev_data['statistics'][nic][pkts]) / interval
+                        nic_info[bps] += (stat[byts] - prev_data['statistics'][nic][byts]) / interval
+                        nic_info['common.loss'] += stat[drps] - prev_data['statistics'][nic][drps]
+
+            prev_data = current_data.copy()
+            if n == (self.times - 1):
+                try:
+                    with open(self.nic_info_file, 'w') as f:
+                        json.dump(current_data, f)
+                except Exception:
+                    pass
+                break
+
+            time.sleep(self.interval)
+        self._print_result(nic_list, current_data)
+
+    def _init_nic_list(self, keys, data):
+        for key in keys:
+            data_item = copy.deepcopy(self.TEMPLATE_NIC)
+            data[key] = data_item
+
+    def _get_evs_link_status(self, nic):
+        link_status = "unlink"
+        try:
+            cmd = 'sudo ovs-appctl dpdk-bond/show'
+            status, output = self.execute(cmd)
+            if status == 0 and re.search(r'slave ' + nic + ': (\S+)',
+                                         output).group(1) == "enabled":
+                link_status = "link"
+        except Exception:
+            pass
+        return link_status
+
+    def _get_evs_nic_statistics_dict(self, string):
+        nic = {}
+        nics_info = json.loads(string.strip())
+        for nic_info in nics_info:
+            for i in nic_info['slaves_info']:
+                statistics = {}
+                statistics['rx_bytes'] = int(i['statistics']['rx_bytes'])
+                statistics['rx_pkts'] = int(i['statistics']['rx_pkts'])
+                statistics['rx_err'] = int(i['statistics']['rx_errors'])
+                statistics['rx_drop'] = int(i['statistics']['rx_dropped'])
+                statistics['tx_bytes'] = int(i['statistics']['tx_bytes'])
+                statistics['tx_pkts'] = int(i['statistics']['tx_pkts'])
+                statistics['tx_err'] = int(i['statistics']['tx_errors'])
+                statistics['tx_drop'] = int(i['statistics']['tx_dropped'])
+                statistics['mtu'] = i['mtu']
+                statistics['nic_status'] = i['status']
+                statistics['nic_speed'] = i['speed']
+                statistics['nic_mac'] = i['mac_address']
+                statistics['nic_type'] = "DPDK"
+                statistics['bond_mac'] = nic_info['mac_address']
+                statistics['bond_trunk'] = nic_info['name']
+
+                nic[i['name']] = statistics
+        return nic
+
+    def get_evs_nic_statistics(self, data):
+        cmd_evs = "sudo ovs-appctl dpdk-bond-slave/show"
+        try:
+            status_evs, output_evs = self.execute(cmd_evs)
+            if status_evs != 0 and not output_evs:
+                return
+            data['epoch'] = time.time()
+            nic_evs = self._get_evs_nic_statistics_dict(output_evs)
+            data['statistics'] = nic_evs
+        except Exception:
+            return
+
+    def _print_result(self, nic_list, current_data):
+        for nic, stat in nic_list.items():
+            stat['common.mac_address'] = current_data['statistics'][nic]['bond_mac']
+            stat['nic.mac_address'] = current_data['statistics'][nic]['nic_mac']
+            stat['nic.link_speed'] = current_data['statistics'][nic]['nic_speed']
+            stat['nic.mtu'] = current_data['statistics'][nic]['mtu']
+            stat['nic.status'] = current_data['statistics'][nic]['nic_status']
+            stat['common.trunk'] = current_data['statistics'][nic]['bond_trunk']
+            stat['common.link_speed'] = current_data['statistics'][nic]['nic_speed']
+            stat['nic.link_status'] = self._get_evs_link_status(nic)
+
+            stat['nic.rx_pps'] = round(stat['nic.rx_pps'] / self.times, 2)
+            stat['nic.rx_bps'] = round(stat['nic.rx_bps'] * 8 / self.times, 2)
+            stat['nic.tx_pps'] = round(stat['nic.tx_pps'] / self.times, 2)
+            stat['nic.tx_bps'] = round(stat['nic.tx_bps'] * 8 / self.times, 2)
+
+            print("**nicID=%s,vntp=edge_gateway_thread_statics" % nic)
+            print("==vnet.edge_gateway_thread_statics")
+            print(','.join(['{}={}'.format(i, j) for i, j in stat.items() if i in self.TEMPLATE_NIC]))
+
+
+if __name__ == '__main__':
+    detector = BondStatistics()
+    detector.detect()
+    
+    
+    
+   
+    
+    {
+	"indicator": {
+		"business_name": "VPC",
+		"business_type": "Business",
+		"collect_interval": 60,
+		"execfile_sha256": "",
+		"execfile_sha256_arm": "",
+		"execute_account": "openstack",
+		"indicator_tag": "",
+		"monitor_items": [{
+			"data_items":[
+					{
+						"data_type":"character",
+						"desc_zh":"Bonding设备",
+						"name":"common.trunk"
+					},
+					{
+						"data_type":"number",
+						"desc_zh":"采集间隔",
+						"name":"common.interval"
+					},
+					{
+						"data_type":"number",
+						"desc_zh":"网口速率",
+						"name":"common.link_speed"
+					},
+					{
+						"data_type":"character",
+						"desc_zh":"Bond port Mac地址",
+						"name":"common.mac_address"
+					},
+					{
+						"data_type":"number",
+						"desc_zh":"丢包数",
+						"name":"common.loss"
+					},
+					{
+						"data_type":"character",
+						"desc_zh":"链接状态",
+						"name":"nic.link_status"
+					},
+					{
+						"data_type":"number",
+						"desc_zh":"mtu",
+						"name":"nic.mtu"
+					},
+					{
+						"data_type":"character",
+						"desc_zh":"网卡mac地址",
+						"name":"nic.mac_address"
+					},
+					{
+						"data_type":"character",
+						"desc_zh":"网卡状态",
+						"name":"nic.status"
+					},
+					{
+						"data_type":"number",
+						"desc_zh":"收方向bps",
+						"name":"nic.rx_bps"
+					},
+					{
+						"data_type":"number",
+						"desc_zh":"收方向pps",
+						"name":"nic.rx_pps"
+					},
+					{
+						"data_type":"number",
+						"desc_zh":"发方向bps",
+						"name":"nic.tx_bps"
+					},
+					{
+						"data_type":"number",
+						"desc_zh":"发方向pps",
+						"name":"nic.tx_pps"
+					}
+			],
+			"monitoritem_tag": "",
+			"name": "vnet.edge_gateway_thread_statics"
+		}],
+		"plugin_collect_script_path": "CloudMonitor/script/edge_gateway_report_bond_statics_to_cloud_monitor.py",
+		"plugin_desc_en": "",
+		"plugin_desc_zh": "edge_gateway bond统计",
+		"plugin_file_type": "script",
+		"plugin_name": "edge_gateway.BondStat",
+		"plugin_param": "",
+		"plugin_type": "SCRIPT",
+		"topic_name": ""
+	},
+	"package_sha256": "123456789"
+}
+
+    
+    
+    
+    
