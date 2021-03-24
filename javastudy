@@ -27,3 +27,6 @@ https://zhuanlan.zhihu.com/p/127911769
 
 10.实现负载均衡的两大方式
 https://www.yht7.com/news/99496
+
+11.Zuul上实现限流（spring-cloud-zuul-ratelimit）
+https://www.jianshu.com/p/d165e12df1da
