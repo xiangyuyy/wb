@@ -33,3 +33,7 @@ https://www.jianshu.com/p/d165e12df1da
 
 12.zuul通过zuulFilter实现token的权限认证和增加公共参数
 https://blog.csdn.net/dunegao/article/details/90720241
+
+13.基于Redisson的分布式锁优化秒杀逻辑
+lemonrel
+https://zhuanlan.zhihu.com/p/99187446
