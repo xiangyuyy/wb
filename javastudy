@@ -73,7 +73,9 @@ https://mp.weixin.qq.com/s?__biz=MzAxNjk4ODE4OQ==&mid=2247484647&idx=1&sn=f6439e
 
 25.ThreadLocal的原理、作用、使用弱引用原因、应用举例
 https://www.cnblogs.com/shen-qian/p/12108655.html
-
+ 
+26.定位oom  unable to create new native thread 关于Linux报Resource temporarily unavailable问题解决记录
+https://blog.csdn.net/qq_35963057/article/details/81489907
 
 
 
