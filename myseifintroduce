@@ -21,7 +21,7 @@
 熟悉掌握Java 语言，对GoLand，Python，Shell语言有一定的开发经验。
 熟悉Spring Mvc，Mybatis，Spring Boot，Spring 等基本开发框架。
 熟悉微服务相关开发框架，分布式开发相关技术，Spring Cloud，Nacos，Dubbo等开发框架。
-熟悉Mysql数据库，Redis，InfluxDB，RocketMQ，Kafka，Disruptor等中间件。
+熟悉Mysql数据库，Redis，etcd，InfluxDB，RocketMQ，Kafka，Disruptor等中间件。
 熟悉Tomcat，Nginx，Linux，Jenkins配置和常用命令。
 熟悉Javascript，Html5，CSS，Jquery，NodeJs前端技术框架。
 熟悉数据设计和开发技巧，能够根据业务需求独立完成设计，开发和架构优化。
